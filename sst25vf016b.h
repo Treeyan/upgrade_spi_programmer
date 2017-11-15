@@ -34,7 +34,7 @@ void Auto_Add_IncA(unsigned long Dst, unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncB(unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncA_EBSY(unsigned long Dst, unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncB_EBSY(unsigned char byte1, unsigned char byte2);
-void Chip_Erase();
+void Chip_Erase(unsigned char cmd);
 void Sector_Erase(unsigned long Dst);
 void Block_Erase_32K(unsigned long Dst);
 void Block_Erase_64K(unsigned long Dst);

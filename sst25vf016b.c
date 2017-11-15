@@ -38,7 +38,7 @@ void Auto_Add_IncA(unsigned long Dst, unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncB(unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncA_EBSY(unsigned long Dst, unsigned char byte1, unsigned char byte2);
 void Auto_Add_IncB_EBSY(unsigned char byte1, unsigned char byte2);
-void Chip_Erase();
+void Chip_Erase(unsigned char cmd);
 void Sector_Erase(unsigned long Dst);
 void Block_Erase_32K(unsigned long Dst);
 void Block_Erase_64K(unsigned long Dst);
@@ -482,6 +482,9 @@ unsigned char HighSpeed_Read(unsigned long Dst)
 /*		Nothing							*/
 /*									*/
 /************************************************************************/
+
+extern void printProgress( int cur, int fin );
+
 void HighSpeed_Read_Cont(unsigned long Dst, unsigned long no_bytes, unsigned char *buffer)
 {
 	unsigned long i = 0;
@@ -493,9 +496,11 @@ void HighSpeed_Read_Cont(unsigned long Dst, unsigned long no_bytes, unsigned cha
 	Send_Byte(0xFF);			/*dummy byte*/
 	for (i = 0; i < no_bytes; i++)		/* read until no_bytes is reached */
 	{
-		if (i % 0x4000 == 0) {
-			printf ("Read: %ld KBytes\n", i / 0x400);
-		}
+//		if (i % 0x4000 == 0) {
+//			printf ("Read: %ld KBytes\n", i / 0x400);
+        if ( i % 256 == 255 )      
+            printProgress( i+1, no_bytes );
+//		}
 		buffer[i] = Get_Byte();		/* receive byte and store in buffer */
 	}
 	CE_High();				/* disable device */
@@ -725,10 +730,10 @@ void Auto_Add_IncB_EBSY(unsigned char byte1, unsigned char byte2)
 /* Returns:								*/
 /*		Nothing							*/
 /************************************************************************/
-void Chip_Erase()
+void Chip_Erase( unsigned char cmd )
 {						
 	CE_Low();				/* enable device */
-	Send_Byte(0x60);			/* send Chip Erase command (60h or C7h) */
+	Send_Byte(cmd);			/* send Chip Erase command (60h or C7h) */
 	CE_High();				/* disable device */
 }
 

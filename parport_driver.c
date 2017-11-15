@@ -58,7 +58,7 @@ void parport_init ()
 //
 
 //
-// treeyan.
+// treeyan. Parallel wiggler jtag port declare.
 //
 void SI (int si)
 {

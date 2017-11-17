@@ -1,12 +1,12 @@
-
+ 
     尝试在linux上使用ch341编程器，它很便宜，但并没找到合适的软件。再有后来还给公司了。
 
     还有一只 Parallel Wiggle jtag 加上正好有看到一个使用它来编程的页面
 
         http://www.malinov.com/Home/sergeys-projects/spi-flash-programmer
 
-    稍修改下以使它可以编程普通的spi flash
+    稍修改下以使它可以编程 winband spi flash 和 24c01-08 i2c eeprom
 
-    编程的流程应该是先擦除再写入
+    spi flash 编程的流程应该是先擦除再写入
 
     在获得id时等于0或者0xFFFFFF 表示线路连接有问题

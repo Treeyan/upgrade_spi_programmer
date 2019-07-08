@@ -22,6 +22,7 @@
   * 2016.12.22. Treeyan, make it compatible with w25xx flash chip.
   * 2016.12.30. 25FUxxx need command 0x7C to erase chip.
   * 2017.09.10. I2C eeprom 24cxx been supports.
+  * 2019.07.08. bug fixed, Pm25lvxxx, status WPEN must clear.
  */
 
  //#include <stdio.h>
@@ -616,11 +617,21 @@ int main( int argc, char* argv[] )
 
         sleep( 1 );
 
+        /* enable write again */
+        status_reg = Read_Status_Register();
+        status_reg &= 0x43;	/* clear BPL and BPx bits */
+        EWSR();
+        WRSR( status_reg );
+        WREN();
+        /* get some idle ??? */
+        Wait_Busy();
+
         // 25FUxxx need this.
         WREN();
         /* erase chip */
         Chip_Erase( 0xC7 );
         Wait_Busy();
+
     }
     else {
 

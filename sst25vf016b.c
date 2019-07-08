@@ -538,21 +538,21 @@ void Byte_Program(unsigned long Dst, unsigned char byte)
 //
 // by treeyan
 //
-void Page_Program(unsigned long Dst, unsigned char * buffer)
+void Page_Program( unsigned long Dst, unsigned char* buffer )
 {
     int i;
 
-	CE_Low();				/* enable device */
-	Send_Byte(0x02); 			/* send Byte Program command */
-	Send_Byte(((Dst & 0xFFFFFF) >> 16));	/* send 3 address bytes */
-	Send_Byte(((Dst & 0xFFFF) >> 8));
-	Send_Byte(Dst & 0xFF);
+    CE_Low();				/* enable device */
+    Send_Byte( 0x02 ); 			/* send Byte Program command */
+    Send_Byte( ( ( Dst & 0xFFFFFF ) >> 16 ) );	/* send 3 address bytes */
+    Send_Byte( ( ( Dst & 0xFFFF ) >> 8 ) );
+    Send_Byte( Dst & 0xFF );
 
-    for( i = 0; i < 256; i++ ) {
-    	Send_Byte(buffer[i]);			/* send byte to be programmed */
+    for ( i = 0; i < 256; i++ ) {
+        Send_Byte( buffer[i] );			/* send byte to be programmed */
     }
 
-	CE_High();				/* disable device */
+    CE_High();				/* disable device */
     Wait_Busy();
 }
 
